@@ -469,6 +469,8 @@ class HfssDesktop(COMWrapper):
     def open_project(self, path):
         ''' returns error if already open '''
         project_name=path.split('\\')[-1].split('.')[0]
+        print(f'project_name: {project_name}')
+        print(f'path: {path}')
         if check_path(path):
             if project_name in self.get_project_names():
                 for projs in self.get_projects():
@@ -480,8 +482,11 @@ class HfssDesktop(COMWrapper):
                 project=HfssProject(self, self._desktop.OpenProject(path))
             return project
         else:
-            warnings.warn('No project in path of name: %s'%path.split('\\')[-1])
-            return None
+            path_split = path.split('\\')[-1]
+            warnings.warn(f'No project in path of name: {path_split}')
+            warnings.warn('Creating new project ...')
+            project = self.new_project()
+            return project
 
 
     def set_active_project(self, name):
