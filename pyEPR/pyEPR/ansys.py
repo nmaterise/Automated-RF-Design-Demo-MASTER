@@ -2821,6 +2821,13 @@ class HfssModeler(COMWrapper):
         )
         return selection_name
 
+
+    def delete(self, selection_name):
+        """ Deletes objection based on selection """
+        self._modeler.Delete(["NAME:Selections",
+                              "Selections:=", selection_name])
+
+
     def _fillet(self, radius, vertex_index, obj):
         vertices = self._modeler.GetVertexIDsFromObject(obj)
         if isinstance(vertex_index, list):
